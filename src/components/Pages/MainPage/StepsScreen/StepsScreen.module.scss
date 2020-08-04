@@ -1,0 +1,58 @@
+.steps-screen {
+  background-size: cover;
+  background-position: center;
+}
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 1rem;
+  justify-content: space-between;
+  margin: 0 -35px;
+  &Item {
+    flex: 1 1 220px;
+    //min-width: 25%;
+    //max-width: 220px;
+    margin: 0 35px;
+    margin-bottom: 50px;
+    &Img {
+      max-height: 120px;
+      margin-bottom: 20px;
+      display: inline-block;
+      vertical-align: middle;
+      @media (min-width: 992px) {
+        margin-right: 20px;
+      }
+      img {
+        max-height: 120px;
+      }
+    }
+    &Title {
+      font-weight: 700;
+      font-size: 1.13em;
+      width: 220px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .steps {
+    &Item {
+      //min-width: 50%;
+      min-width: unset;
+      max-width: calc(50% - 70px);
+      flex-basis: calc(50% - 70px);
+      margin-bottom: 25px;
+      flex-shrink: 0;
+      &Img, &Title  {
+        display: block;
+        max-width: 100%;
+        img {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,13 @@
+@import '../../../../styles/colors';
+
+.btn-primary {
+  background: $blueGreen;
+  border: 0;
+}
+.btn {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 22px 45px;
+  letter-spacing: 1px;
+  border-radius: 50px;
+}

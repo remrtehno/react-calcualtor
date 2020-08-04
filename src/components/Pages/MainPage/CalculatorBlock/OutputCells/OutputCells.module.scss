@@ -1,0 +1,47 @@
+.outputCell {
+  background: var(--white);
+  color: var(--mainBlack);
+  border-radius: 100px 39px 39px 100px;
+  position: relative;
+  max-width: 335px;
+  padding: 8px 10px;
+  padding-left: 65px;
+  margin-bottom: 30px;
+}
+
+.text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 80%;
+  white-space: nowrap;
+}
+
+.outputNumber {
+  background: var(--blueGreen);
+  color: var(--white);
+  border-radius: 100%;
+  width: 55px;
+  height: 55px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.4em;
+}
+
+.title {
+  margin: 0;
+  margin-bottom: 36px;
+  font-size: 1.5em;
+}
+
+@media (max-width: 992px) {
+  .text {
+    font-size: 100%;
+  }
+}

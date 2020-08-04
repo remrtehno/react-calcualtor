@@ -1,0 +1,17 @@
+.form-control {
+  border-radius: 50px;
+  border: 0;
+  text-align: center;
+  font-weight: 300;
+  &:not(.small) {
+    height: 68px;
+    font-size: 1.12em;
+  }
+  &.small {
+    height: 60px;
+    font-size: 1em;
+  }
+  &::placeholder {
+    opacity: .6;
+  }
+}

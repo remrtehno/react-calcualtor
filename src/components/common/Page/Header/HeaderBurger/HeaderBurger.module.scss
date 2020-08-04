@@ -1,0 +1,66 @@
+.headerBurger {
+  padding: 10px 0;
+  .headerContent {
+    padding: 0px;
+    //position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #5081f1;
+    z-index: 9;
+    nav {
+      flex-direction: column;
+      padding-top: 25px;
+      a:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .menuItem {
+    display: block;
+    border-bottom: 1px solid grey;
+    padding: 24px 0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .burgerIcon {
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid grey;
+    border-radius: 6px;
+  }
+
+  .navbarToggler {
+    padding: .25rem .75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    color: rgba(255,255,255,.5);
+    border-color: rgba(255,255,255,.1);
+  }
+  .navbarToggleIcon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    content: "";
+    background: no-repeat center center;
+    background-size: 100% 100%;
+    background:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+  .close {
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAAAm0lEQVRIie2WMQqAMAxFxYOIeJgiCN5/cfAU6vQcdCgdpElTs/Tv/7+kpG26rqnpbwEjEAr8ARilpgHYgAtYFdAZOIAdmCTGAJw8OoFF4F0Sr+zUoqrJ7VzjKQ4yg0oCzaE5wdWgX4Dq0AieTqxq8rXwuEt1p32N4szlctQuw+VynVweEEmgGVwTVAzH61vEaxF4zf+vPk1NFroBzuZgn+aXSLoAAAAASUVORK5CYII=");
+  }
+}

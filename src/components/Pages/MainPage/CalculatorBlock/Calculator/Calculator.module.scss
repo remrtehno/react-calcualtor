@@ -1,0 +1,128 @@
+.calculator {
+  margin-bottom: 2.5rem;
+  font-size: .9rem;
+  &::after {
+    clear: both;
+    display: block;
+    content: " ";
+  }
+  .title {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1.12em;
+    border-bottom: 1px solid rgba(255,255,255, 0.5);
+    text-indent: 10px;
+    padding-bottom: 5px;
+    flex: 1 0 100%;
+  }
+  .inputControl {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+   & > div {
+     flex: 1 0 10%;
+     & + div {
+       margin-left: 10px;
+     }
+    }
+  }
+}
+
+.grow {
+  flex-grow: 2 !important;
+}
+
+.grid {
+  color: var(--mainBlack);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 25px 30px;
+  margin-bottom: 25px;
+}
+
+.inputCells {
+  border-radius: .6em !important;
+  height: var(--calc-height-input) !important;
+  //width: var(--calc-width-input);
+  font-size: .88em !important;
+}
+
+.select {
+  & > div {
+    border: 0;
+    border-radius: .6em ;
+    font-size: .88em;
+    min-height: var(--calc-height-input);
+  }
+}
+
+.homeFenceSelect {
+  position: absolute !important;
+  right: 50px;
+  bottom: 15px;
+  width: 210px;
+}
+
+
+
+.fullRow {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.total {
+  font-weight: 600;
+  font-size: 1.5em;
+  float: left;
+  span {
+    font-size: 150%;
+    margin-left: 5px;
+  }
+}
+
+.calculateButton {
+  background: var(--blueGreen);
+  font-size: .95em;
+  color: var(--white);
+  width: 160px;
+  height: 50px;
+  padding: .85em 1em;
+  border-radius: .6em;
+  float: right;
+}
+
+.homeMockup {
+  position: relative;
+  height: calc(100% - 2.5rem);
+  margin-bottom: 2.5rem;
+  padding-top: 33px;
+}
+.homeFence {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  max-width: 95%;
+}
+
+
+@media (max-width: 992px) {
+  .calculator {
+    font-size: 1rem;
+  }
+  .grid {
+    display: block;
+  }
+  .inputControl {
+    margin-bottom: 15px;
+  }
+  :root {
+    --calc-height-input: 35px;
+  }
+  .calculateButton {
+    height: auto;
+  }
+  .homeFenceSelect {
+    display: none;
+  }
+}
+

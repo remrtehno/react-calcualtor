@@ -1,0 +1,91 @@
+.SelectRadio {
+  display: flex;
+  & > div {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    & > label {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* Option */
+
+.option {
+  width: var(--calc-width-input);;
+  height: var(--calc-height-input);
+  display: inline-block;
+  margin-bottom: 0.5em;
+  font-size: .88em;
+  position: relative;
+  & + & {
+    margin-left: 10px;
+  }
+}
+
+/* Check */
+
+.check {
+  padding-left: 1.2em;
+  margin-bottom: 0;
+  flex-grow: 1;
+}
+
+.check__input {
+  position: absolute;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.check__box {
+  position: absolute;
+  margin-top: 0;
+  margin-left: -1em;
+  overflow: hidden;
+  color: var(--mainBlack);
+  width: 100%;
+  height: var(--calc-height-input);
+  background: #fff;
+  border-radius: .6em;
+  border: 0;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+/* Checked */
+
+.check__input:checked + .check__box {
+  background-color: var(--blueGreen);
+  color: var(--white);
+}
+
+/* Focused */
+
+.check__input:focus + .check__box {
+  //box-shadow:
+  //        0 0 0 0.1em var(--blueGreen),
+  //        0 0 0 0.2em var(--blueGreen);
+}
+
+/* Disabled */
+
+.check__input:disabled + .check__box {
+  box-shadow: 0 0 0 0.1em #9B9B9B;
+}
+
+.check__input:checked:disabled + .check__box {
+  background-color: #9B9B9B;
+}
+
+
+/* Parent for variations */
+.parent {
+  display: flex;
+}

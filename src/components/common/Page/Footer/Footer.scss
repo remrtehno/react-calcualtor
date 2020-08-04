@@ -1,0 +1,35 @@
+.footer {
+  font-size: 1rem;
+  background: #dcebf0;
+  padding: 40px 0;
+  &-small-links {
+    font-weight: 300;
+    font-size: 0.87em;
+    opacity: .7;
+  }
+  &-nav {
+    margin-top: 15px;
+    font-size: 1em;
+    a {
+      margin: 0 15px;
+    }
+  }
+  .logo {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 992px) {
+  .footer {
+    text-align: center;
+    &-nav {
+      margin-top: 7px;
+      margin-bottom: 7px;
+      a {
+        display: block;
+        margin-bottom: 4px;
+      }
+    }
+  }
+
+}

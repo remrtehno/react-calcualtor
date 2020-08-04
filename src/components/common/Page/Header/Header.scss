@@ -1,0 +1,79 @@
+@import '../../../../styles/colors.scss';
+
+.header {
+  font-size: 1rem;
+  top: 0;
+  z-index: 99;
+  background: #f7f7f7;
+  &-nav {
+    background: $blueLight;
+    nav {
+      display: flex;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+      padding: 10px 0;
+      a {
+        color: $white;
+        font-weight: 500;
+        text-transform: uppercase;
+        &:hover {
+          text-decoration: none;
+          span {
+            border-bottom: 2px solid;
+          }
+        }
+        img {
+          margin-right: 15px;
+        }
+      }
+    }
+  }
+  .logo {
+    margin-top: 10px;
+  }
+}
+.tel-wrapper {
+}
+.days {
+  opacity: .7;
+  font-size: 0.93em;
+}
+.blue-tel {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: inherit;
+  img {
+    margin-right: 15px;
+  }
+}
+.marker {
+  color: inherit;
+  font-weight: 600;
+  font-size: 1.33em;
+  display: inline-block;
+  margin-top: 15px;
+  img {
+    margin-right: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .header {
+    text-align: center;
+  }
+  .tel-wrapper {
+    line-height: 2.1;
+  }
+  .marker {
+    margin-bottom: 15px;
+  }
+  .days {
+    font-size: 1.2em;
+  }
+}
+
+@media (min-width: 992px) {
+  .header {
+    position: sticky;
+  }
+}
