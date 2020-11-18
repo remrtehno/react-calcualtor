@@ -165,10 +165,10 @@ let items1 = [
 
 const options = {
   imageMargin: 15,
-  collageDensity: 0.8,
+  collageDensity: 1,
   cubeRatio: 1,
   gallerySize: 50,
-  groupSize: 3,
+  groupSize: 2,
   groupTypes: '1,2h,2v,3t,3b,3l,3r',
   allowTitle: true,
   allowSocial: true,

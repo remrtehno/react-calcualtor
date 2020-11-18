@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@popperjs/core": "^2.4.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -20,12 +21,13 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-html-parser": "^2.0.2",
+    "react-popper": "^2.2.3",
+    "react-popper-tooltip": "^3.1.0",
     "react-scripts": "3.4.1",
     "react-select": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
-
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build": "GENERATE_SOURCEMAP=false react-scripts build && npm run build-rename",
