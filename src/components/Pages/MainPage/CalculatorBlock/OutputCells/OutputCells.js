@@ -6,7 +6,6 @@ import {outputCells} from "../../../../../mocks/mocks";
 
 
 const OutputCells = ({cells = outputCells}) => {
-
   return(
     <Row>
       <Col lg={12}>
@@ -16,7 +15,7 @@ const OutputCells = ({cells = outputCells}) => {
         if(!name || name === 'Нет') return ;
         return(
           <Col lg={4} key={key}>
-            <div className={s.outputCell}>
+            <div data-name={cells.name} className={s.outputCell}>
               <div className={s.outputNumber}>{value}</div>
               <span className={s.text}>{measure} {name}</span>
             </div>

@@ -11,20 +11,11 @@ import home from "../../../../../assets/home-mock.png";
 import ColoredSelect from "../../../../common/ColoredSelect/ColoredSelect";
 import OutputCells from "../OutputCells/OutputCells";
 import {get} from "../../../../../api/index"
-import {calcResult, calcSheetArea, calcMultiple, calcPillar} from "./helpers";
+import {calcResult, calcSheetArea, calcMultiple, calcPillar, contourLinesRowsOptions} from "./helpers";
 import {CALCULATOR_URL} from "../../../../../constants/constants";
 import ReactHtmlParser from 'react-html-parser';
 import {createPopper} from '@popperjs/core';
 import Popover from "../../../../common/ui/Popover/Popover";
-
-
-const map = (array = []) => {
-  let result = array.map(({label}) => {
-    return {value: label, label: label};
-  });
-  result.push({value: 0, label: "Нет"});
-  return result;
-};
 
 const widthGateOptions = (rows = []) => {
   let options = [];
@@ -86,6 +77,7 @@ const Calculator = () => {
     result: 0,
     gate: 0,
     gatePrice: 0,
+    gateWidthName: 'Ширина ворот',
   });
   const [state, setState] = useState({
     visual: null,
@@ -129,12 +121,12 @@ const Calculator = () => {
       gateVariationsName: total.gateVariationsName
     });
 
-    const pillars = calcMultiple([countPillars[0], total.pillarPrice, total.pillarsWidth]);
+    let pillars = calcMultiple([countPillars[0], total.pillarPrice, total.pillarsWidth]);
 
 
     //НАЛИЧИЕ ЛЕНТОЧНОГО ФУНДАМЕНТА
     let foundationValue = 0;
-    if(total.foundation) {
+    if (total.foundation) {
       foundationValue = total.fenceWidth * 2000;
     }
 
@@ -150,6 +142,8 @@ const Calculator = () => {
     ]);
 
 
+    //****** start of display results
+
     let corrugatedBoardName1 = (Number(total.fenceWidth) / 1.15);
     let corrugatedBoardName2 = 0;
     if (total.gateWidth) {
@@ -158,29 +152,57 @@ const Calculator = () => {
     }
     let corrugatedBoardName3 = 0;
     if (total.gatePrice) {
-
-      corrugatedBoardName3 = Number(state.gate.additionalSheets);
+      corrugatedBoardName3 = Number(state.gate.additionalSheets * total.gateCount);
     }
-    console.log('if yes ',corrugatedBoardName3,  Number(state.gate.additionalSheets), total.gatePrice );
 
-    let screws = 0;
-    //if (total.gate && state.gate) {
-    screws = (Number(total.fenceWidth || 0) * 12) + Number(total.gateWidth ? total.gateWidth.additionalScrews : 0) + Number(state.gate.additionalScrews || 0);
+    let screws = (Number(total.fenceWidth || 0) * 12) + Number(total.gateWidth ? total.gateWidth.additionalScrews : 0) + Number(state.gate.additionalScrews * total.gateCount || 0);
+
+
+    let hinges = +(total.gateWidth?.additionalHinges || 0);
+    // if (total.gateWidth && total.gateWidth.additionalHinges* total.gateCount) {
+    hinges += Number((total.gateCount || 0) * state.gate.additionalHinges) || 0;
+
+    console.log('hinges:', total.gateWidth?.additionalHinges, total.gateCount, state.gate.additionalHinges)
+    console.log('gateWidth: ', total.gateWidth)
+
     //}
-
-    let hinges = 0;
-    if (total.gateWidth && total.gateWidth.additionalHinges) {
-      hinges = Number(total.gateWidth.additionalHinges);
-    }
-    if (total.gate) {
-      hinges += Number(state.gate.additionalHinges);
-    }
+    // if (total.gatePrice) {
+    //   hinges += Number(state.gate.additionalHinges * total.gateCount);
+    // }
 
 
-    let contourLinesNameVal =
+    let contourLinesNameVal = 0;
+    /* =
       (Number(total.fenceWidth || 0) * total.contourLinesRows || 1)
-      + (total.gateWidth ? Number(total.gateWidth.additionalProftube) : 0)
-      + (total.gate ? Number(state.gate.additionalProfTube) : 0);
+      + (total.gateWidth ? Number(total.gateWidth.additionalProftube * (total.gateCount || 0)) : 0)
+      + (total.gatePrice ? Number(state.gate.additionalProfTube * (total.gateCount || 0)) : 0); */
+
+      try {
+
+        if(total.contourLinesRows) {
+          contourLinesNameVal = (+total.fenceWidth * total.contourLinesRows)
+        } else {
+          contourLinesNameVal = +total.fenceWidth
+        }
+
+        if(total.gateCount) {
+          contourLinesNameVal += +state.gate.additionalProfTube * total.gateCount;
+        }
+        if(total.gateWidth.additionalProftube) {
+          contourLinesNameVal += +total.gateWidth.additionalProftube
+        }
+
+
+        console.log('total.fenceWidth:', total.fenceWidth);
+        console.log('contourLinesRows:', total.contourLinesRows)
+        console.log('state.gate.additionalProfTube:', state.gate.additionalProfTube)
+        console.log('total.gateCount:',  total.gateCount);
+        console.log('total.gateWidth.additionalProftube:', total.gateWidth.additionalProftube)
+
+      } catch (e) {
+        console.log(e, 'error')
+      }
+
 
     //  (=(длина забора/3+расчет добавления количества столбов)*длина забора в зависимости от высоты*стоимость столба за 1 м.п.)
     let widthColsPillars = Math.round(Number(total.fenceWidth || 0) / 3);
@@ -201,7 +223,7 @@ const Calculator = () => {
           total.contourLinesName.replace('Профилированная', 'профилированных').replace('труба', 'труб')
           :
           "",
-        value: contourLinesNameVal, 
+        value: contourLinesNameVal,
         measure: 'п.м.'
       },
 
@@ -212,14 +234,20 @@ const Calculator = () => {
       {name: 'щебня', value: (Number(total.fenceWidth || 0) * 9).toFixed(), measure: 'кг'},
     ];
 
-    if(total.gateVariations)
-      outputCells.splice(2, 0,  {name: 'труб d=108 мм, со стеной 5,5 мм', value: total.gateWidth ? total.gateWidth.tube : 0, measure: 'п.м.'},);
+    if (total.gateVariations)
+      outputCells.splice(2, 0, {
+        name: 'труб d=108 мм, со стеной 5,5 мм',
+        value: total.gateWidth ? total.gateWidth.tube : 0,
+        measure: 'п.м.'
+      },);
+//*************** end of display results
 
 
     setTotal({...total, result: result, outputCells: outputCells,});
 
 
   };
+
 
   useEffect(() => {
     if (CALCULATOR_URL) {
@@ -230,7 +258,8 @@ const Calculator = () => {
         });
       });
     }
-  }, []);
+  }, [state]);
+
 
   return (
     <Row>
@@ -280,9 +309,9 @@ const Calculator = () => {
                     {value: 1.8, label: 1.8, widthPillar: 2.4},
                     {value: 2, label: 2, widthPillar: 2.7},
                     {value: 2.2, label: 2.2, widthPillar: 3.0}
-                    ]}
+                  ]}
                   placeholder={'Высота, м *'}
-                  onChange={e => setTotal({...total, fenceHeight: e.value, pillarsWidth: e.widthPillar, })}
+                  onChange={e => setTotal({...total, fenceHeight: e.value, pillarsWidth: e.widthPillar,})}
                 />
                 <Popover className={s.buttonTip}>
                   Стандартная высота забора изменяется от 1,5 до 2,2 м. Другая высота также возможна, но рассчитывается
@@ -302,7 +331,9 @@ const Calculator = () => {
                 />
                 <Popover className={s.buttonTip}>
                   Оцинкованный лист - более дешевый вариант. Крашеный лист смотрится более эстетично и является наиболее
-                  востребованным. Цвет листа можно подобрать на макете слева и посмотреть как это будет выглядеть. <br/> Толщина листа 0,45 мм придает листу большую жесткость, при этом, влечет удорожание примерно на 30%
+                  востребованным. Цвет листа можно подобрать на макете слева и посмотреть как это будет
+                  выглядеть. <br/> Толщина листа 0,45 мм придает листу большую жесткость, при этом, влечет удорожание
+                  примерно на 30%
                 </Popover>
               </div>
             </div>
@@ -332,7 +363,6 @@ const Calculator = () => {
               <h4 className={s.title}>Параметры горизонталей</h4>
               <div className='position-relative'>
                 <Select
-
                   className={classNames(s.select, s.grow, s.smallDropDown)}
                   options={calcOptions(state.contourLines)}
                   placeholder={'Вид'}
@@ -347,7 +377,7 @@ const Calculator = () => {
                 <Select
                   placeholder={'Ряды'}
                   className={s.select}
-                  options={state.contourLinesRows}
+                  options={contourLinesRowsOptions(state.contourLinesRows)}
                   onChange={e => setTotal({...total, contourLinesRows: e.label})}
                 />
                 <Popover className={s.buttonTip}>
@@ -363,15 +393,16 @@ const Calculator = () => {
                 <Select
                   className={classNames(s.select, s.grow)}
                   options={[
-                    {value: 5000, label: '1 калитка'},
-                    {value: 10000, label: '2 калитки'},
-                    {value: 0, label: 'нет калиток'},
+                    {value: state.gate && (state.gate.price * 1), label: '1 калитка', gateCount: 1,},
+                    {value: state.gate && (state.gate.price * 2) + 624, label: '2 калитки', gateCount: 2},
+                    {value: 0, label: 'нет калиток', gateCount: 0,},
                   ]}
                   placeholder={'Количество калиток'}
-                  onChange={e => setTotal({...total, gate: e.label, gatePrice: e.value})}
+                  onChange={e => setTotal({...total, gate: e.label, gatePrice: e.value, gateCount: e.gateCount})}
                 />
                 <Popover className={s.buttonTip}>
-                    Стандартная ширина калитки 90 см. Возможно её изготовление по индивидуальным параметрам. Калитка идёт с замком и комплектом ключей
+                  Стандартная ширина калитки 90 см. Возможно её изготовление по индивидуальным параметрам. Калитка идёт
+                  с замком и комплектом ключей
                 </Popover>
               </div>
             </div>
@@ -384,33 +415,48 @@ const Calculator = () => {
                 placeholder={'Вид'}
                 onChange={
                   e => {
-                    if(!e.value) {
+                    if (!e.value) {
                       setTotal({
                         ...total,
                         gateVariations: e.gateVariations,
                         gateVariationsName: e.value,
                         gateWidth: 0,
-                        gateWidthName: 0,
+                        gateWidthName: 'Ширина ворот',
 
                       });
                       return;
                     }
-                    setTotal({...total, gateVariations: e.gateVariations, gateVariationsName: e.value, });
+
+                    const foundVal = [].concat(state.gateVariations).find(({name}) => name === e.label);
+                    const getMetaGate = foundVal.gateVariations?.find(({width}) => width === total.gateWidthName);
+
+                    if (getMetaGate) {
+                      setTotal({
+                        ...total,
+                        gateWidth: getMetaGate,
+                        gateVariations: e.gateVariations,
+                        gateVariationsName: e.value,
+                      });
+                    } else {
+                      setTotal({
+                        ...total,
+                        gateVariations: e.gateVariations,
+                        gateVariationsName: e.value,
+                      });
+                    }
                   }
                 }
               />
               <Select
                 isDisabled={!total.gateVariations}
-                placeholder={'Длина, м'}
-                value={{value: total.gateWidth, label: total.gateWidthName }}
+                placeholder={'Ширина ворот'}
+                value={{value: total.gateWidth, label: total.gateWidthName}}
                 className={classNames(s.select)}
                 options={widthGateOptions(total.gateVariations)}
                 onChange={e => setTotal({...total, gateWidth: e.obj, gateWidthName: e.label})}
               />
             </div>
-            {
-              console.log(total.gateWidth)
-            }
+
 
             <div className={s.inputControl}>
               <div className='position-relative'>

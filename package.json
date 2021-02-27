@@ -68,6 +68,7 @@
   },
   "devDependencies": {
     "css-loader": "^3.5.3",
+    "eslint-plugin-react": "^7.22.0",
     "postcss-custom-properties": "^9.1.1",
     "renamer": "^2.0.1",
     "replace-in-file": "^6.1.0"
