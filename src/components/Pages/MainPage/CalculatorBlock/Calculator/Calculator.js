@@ -226,13 +226,20 @@ const Calculator = () => {
         value: contourLinesNameVal,
         measure: 'п.м.'
       },
+    
 
       {name: 'саморезов 4,2*16 мм в цвет листа', value: screws, measure: 'шт'},
-      {name: 'краски-грунт', value: (Number(total.fenceWidth || 0) / 8).toFixed(1), measure: 'кг'},
+     
       {name: 'шарнир-петли', value: hinges, measure: 'шт'},
       {name: 'цемента', value: (Number(total.fenceWidth || 0) * 6).toFixed(), measure: 'кг'},
       {name: 'щебня', value: (Number(total.fenceWidth || 0) * 9).toFixed(), measure: 'кг'},
     ];
+
+    if(total.primer) {
+      outputCells.push({name: 'краски-грунт', value: (Number(total.fenceWidth || 0) / 8).toFixed(1), measure: 'кг'})
+    } else {
+      outputCells.push({name: 'краски-грунт', value: 0, measure: 'кг'})
+    }
 
     if (total.gateVariations)
       outputCells.splice(2, 0, {
@@ -258,7 +265,7 @@ const Calculator = () => {
         });
       });
     }
-  }, [state]);
+  }, []);
 
 
   return (
