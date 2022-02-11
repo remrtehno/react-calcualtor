@@ -11,7 +11,7 @@
     "bootstrap": "^4.5.0",
     "chroma-js": "^2.1.0",
     "classnames": "^2.2.6",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "postcss-loader": "3.0.0",
     "postcss-modules-values": "^3.0.0",
     "postcss-normalize": "8.0.1",
